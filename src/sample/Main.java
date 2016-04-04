@@ -24,6 +24,8 @@ public class Main extends Application {
     private ObservableList<ImageStat> imageStatList = FXCollections.observableArrayList();
     private ImageStatViewController controller;
     private FXMLLoader loader;
+    private File initImageFile;
+    private ObservableList<File> initImageList = FXCollections.observableArrayList();
 
     public Main() {
     }
@@ -42,6 +44,10 @@ public class Main extends Application {
      */
     public ObservableList<ImageStat> getImageStatList() {
         return imageStatList;
+    }
+
+    public ObservableList<File> getInitImageList() {
+        return initImageList;
     }
 
     @Override
@@ -87,13 +93,23 @@ public class Main extends Application {
         }
     }
 
+    public void loadInitImage(File file) {
+        initImageFile = file;
+        initImageList.removeAll(initImageList);
+        initImageList.add(file);
+
+        controller.setInitImageView(file);
+
+        System.out.println(initImageList.get(0).getAbsoluteFile());
+    }
+
     public void loadImages(List<File> imageFiles) {
         System.out.println("count: " + imageFiles.size());
         imageStatList.removeAll(imageStatList);
 
         for(File image : imageFiles) {
             ImageStatBuilder builder = new ImageStatBuilder(image);
-            imageStatList.add(builder.getImageStat());
+            imageStatList.add(builder.getImageStat(initImageFile));
         }
     }
 

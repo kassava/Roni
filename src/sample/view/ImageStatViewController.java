@@ -9,6 +9,8 @@ import javafx.scene.image.ImageView;
 import sample.Main;
 import sample.model.ImageStat;
 
+import java.io.File;
+
 public class ImageStatViewController {
 
     @FXML
@@ -19,9 +21,11 @@ public class ImageStatViewController {
     @FXML
     private Label subtractionLabel;
     @FXML
-    private Label devisionLabel;
+    private Label divisionLabel;
     @FXML
-    private ImageView imageView;
+    private ImageView compressedImageView;
+    @FXML
+    private ImageView initImageView;
 
     /**
      * Reference to the main application.
@@ -61,15 +65,22 @@ public class ImageStatViewController {
         if (imageStat != null) {
             // Fill the labels with info from imageStat object.
             subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
-            devisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());
+            divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());
             Image image = new Image("file:" + imageStat.getFilePath());
-            imageView.setImage(image);
+            compressedImageView.setImage(image);
         } else {
             subtractionLabel.setText("");
-            devisionLabel.setText("");
+            divisionLabel.setText("");
             Image image = new Image("file:Eye_light.png");
-            imageView.setImage(image);
+            compressedImageView.setImage(image);
+            image = new Image("file:chfdbnj6.png");
+            initImageView.setImage(image);
         }
+    }
+
+    public void setInitImageView(File file) {
+        Image image = new Image("file:" + file.getAbsolutePath());
+        initImageView.setImage(image);
     }
 
     @FXML
@@ -83,5 +94,11 @@ public class ImageStatViewController {
 
         // Add observable list to the table.
         imageStatTable.setItems(mainApp.getImageStatList());
+
+        System.out.println(mainApp.getInitImageList().size());
+        if (mainApp.getInitImageList().size() != 0) {
+            initImageView.setImage(new Image("file:" + mainApp.getInitImageList().get(0).getAbsolutePath()));
+            System.out.println(mainApp.getInitImageList().get(0).getAbsoluteFile());
+        }
     }
 }

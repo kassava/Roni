@@ -11,7 +11,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Открыть..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpenInitImage" text="Открыть исходное изображение" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Открыть сжатые изображения" />
                   <MenuItem mnemonicParsing="false" text="Сохранить как..." />
               <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Выход" />
             </items>

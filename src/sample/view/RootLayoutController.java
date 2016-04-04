@@ -37,6 +37,23 @@ public class RootLayoutController {
     }
 
     @FXML
+    private void handleOpenInitImage() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "JPG files (*.jpg)", "*.jpg");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            mainApp.loadInitImage(file);
+        }
+    }
+
+    @FXML
     private void handleAbout() {
 
     }
