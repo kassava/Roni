@@ -11,7 +11,7 @@ import javafx.beans.property.StringProperty;
 public class ImageStat {
 
     private final StringProperty compressedImageFilePath;
-    private final StringProperty initImageFilePath;
+    private StringProperty initImageFilePath;
     private StringProperty fileExtension;
     private StringProperty decisiveOnSubtractionStat = new SimpleStringProperty("no stat");
     private StringProperty decisiveOnDivisionStat = new SimpleStringProperty("no stat");
@@ -71,5 +71,18 @@ public class ImageStat {
 
     public void setFileExtension(String fileExtension) {
         this.fileExtension.set(fileExtension);
+    }
+
+
+    public String getInitImageFilePath() {
+        return initImageFilePath.get();
+    }
+
+    public StringProperty initImageFilePathProperty() {
+        return initImageFilePath;
+    }
+
+    public void setInitImageFilePath(String initImageFilePath) {
+        this.initImageFilePath.set(initImageFilePath);
     }
 }

@@ -50,7 +50,7 @@ public class RootLayoutController {
 
         // Set extension filter
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "JPG files (*.jpg)", "*.jpg");
+                "JPG files (*.jpg)", "*.*");
         fileChooser.getExtensionFilters().add(extFilter);
 
         // Show save file dialog

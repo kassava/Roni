@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import sample.Main;
 import sample.model.ImageStat;
+import sample.model.ImageStatBuilder;
 
 import java.io.File;
 
@@ -63,6 +64,9 @@ public class ImageStatViewController {
      */
     private void showImageStatDetails(ImageStat imageStat) {
         if (imageStat != null) {
+
+            ImageStatBuilder builder = new ImageStatBuilder(imageStat);
+
             // Fill the labels with info from imageStat object.
             subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
             divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());

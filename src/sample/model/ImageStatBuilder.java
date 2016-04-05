@@ -2,53 +2,117 @@ package sample.model;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import sample.Statistics.Statistic1;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * Created by kassava on 03.04.16.
  */
 public class ImageStatBuilder {
 
-    File compressedImageFile;
-    File initImageFile;
     ImageStat imageStat;
+    int[][] initImageBytes;
+    int[][] compressedImageBytes;
 
 
-    public ImageStatBuilder(File compressedImageFile) {
-        this.compressedImageFile = compressedImageFile;
-    }
+    public ImageStatBuilder(ImageStat imageStat) {
+        this.imageStat = imageStat;
 
-    public ImageStat getImageStat(File file) {
-        initImageFile = file;
-        if (this.compressedImageFile != null) {
-            computeStat();
-        }
-        return imageStat;
+        computeStat();
     }
 
     private void computeStat() {
-        String fileExtensions = getFileExtension(compressedImageFile) +
-                getFileExtension(initImageFile);
+        String initFileExtension = getFileExtension(imageStat.getInitImageFilePath());
+        switch (initFileExtension) {
+            case "jpg":
+                initImageBytes = getJpgBytes(imageStat.getInitImageFilePath());
+                break;
+            case "raw":
+                initImageBytes = getRawBytes(imageStat.getInitImageFilePath());
+                break;
+        }
 
-        switch (fileExtensions) {
-            case "jpgjpg":
-                computeJpgImageStat();
+        String compressedFileExtension = getFileExtension(imageStat.getCompressedImageFilePath());
+        switch (compressedFileExtension) {
+            case "jpg":
+                compressedImageBytes = getJpgBytes(imageStat.getCompressedImageFilePath());
                 break;
-            case "jpgraw":
+            case "raw":
                 break;
-            case "rawjpg":
-                break;
-            case "rawraw":
-                computeRawImageStat();
-                break;
-            default:
-                break;
+        }
+
+        makeCalculating();
+    }
+
+    /**
+     * Gets bytes from jpg image.
+     */
+    private int[][] getJpgBytes(String imageFilePath) {
+        Image image = new Image("file:" + imageFilePath);
+        int imageWidth = (int) image.getWidth();
+        int imageHeight = (int) image.getHeight();
+        int[][] imageBytes = new int[imageHeight][imageWidth];
+        PixelReader pixelReader = image.getPixelReader();
+        for (int y = 0; y < imageHeight; y++) {
+            for (int x = 0; x < imageWidth; x++) {
+                imageBytes[x][y] = (int) (pixelReader.getColor(x, y).getBlue() * 255);
+                System.out.print(imageBytes[x][y] + " ");
+            }
+            System.out.println();
+        }
+        return imageBytes;
+    }
+
+    /**
+     * Gets bytes from raw image.
+     * @return array of bytes
+     */
+    private int[][] getRawBytes(String imageFilePath) {
+        File imageFile = new File(imageFilePath);
+        int imageFileSize = (int) imageFile.length();
+//        imageFileSize /= 3;
+        int[][] imageBytes = new int[(int) Math.sqrt(imageFileSize)][(int) Math.sqrt(imageFileSize)];
+        byte[] mirerBytes = new byte[imageFileSize];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(imageFile));
+            buf.read(mirerBytes, 0, mirerBytes.length);
+            buf.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(imageFileSize);
+        int i = 0;
+        for (int x = 0; x < Math.sqrt(imageFileSize); x++) {
+            for (int y = 0; y < Math.sqrt(imageFileSize); y++) {
+                imageBytes[x][y] =  0xFF & (int) mirerBytes[i++];
+                System.out.print(imageBytes[x][y] + "\t");
+            }
+            System.out.println();
+        }
+        return imageBytes;
+    }
+
+    private void makeCalculating() {
+        double[] initLk = Statistic1.stat1(initImageBytes);
+        double[] compressedLk = Statistic1.stat1(compressedImageBytes);
+        double[] subLk = new double[initLk.length];
+        for (int idx = 0; idx < initLk.length; idx++) {
+            subLk[idx] = initLk[idx] - compressedLk[idx];
+            System.out.println(subLk[idx]);
+        }
+        System.out.println("---");
+        double[] divLk = new double[initLk.length];
+        for (int idx = 0; idx < initLk.length; idx++) {
+            divLk[idx] = initLk[idx] / compressedLk[idx];
+            System.out.println(divLk[idx]);
         }
     }
 
-    private static String getFileExtension(File file) {
-        String fileName = file.getName();
+    private static String getFileExtension(String fileName) {
+//        String fileName = file.getName();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
             return fileName.substring(fileName.lastIndexOf(".") + 1);
         else return "";
@@ -65,21 +129,6 @@ public class ImageStatBuilder {
      * Computes statistics for image in jpg format.
      */
     private void computeJpgImageStat() {
-        Image image = new Image("file:" + compressedImageFile.getAbsolutePath());
 
-        System.out.println(imageStat.getCompressedImageFilePath());
-
-        PixelReader pixelReader = image.getPixelReader();
-        imageStat = new ImageStat(initImageFile.getAbsolutePath(),
-                compressedImageFile.getAbsolutePath());
-
-        int imageWidth = (int) image.getWidth();
-        int imageHeight = (int) image.getHeight();
-        Integer[][] byteArray = new Integer[imageHeight][imageWidth];
-        for (int y = 0; y < imageHeight; y++) {
-            for (int x = 0; x < imageWidth; x++) {
-                byteArray[x][y] = (int) (pixelReader.getColor(x, y).getBlue() * 255);
-            }
-        }
     }
 }

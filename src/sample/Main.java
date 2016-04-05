@@ -99,6 +99,9 @@ public class Main extends Application {
 
         controller.setInitImageView(file);
 
+        for (ImageStat imageStat : imageStatList) {
+            imageStat.setInitImageFilePath(initImageFile.getAbsolutePath());
+        }
 
         System.out.println(initImageList.get(0).getAbsoluteFile());
     }
