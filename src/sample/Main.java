@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.model.ImageStat;
-import sample.model.ImageStatBuilder;
 import sample.view.ImageStatViewController;
 import sample.view.RootLayoutController;
 
@@ -100,6 +99,7 @@ public class Main extends Application {
 
         controller.setInitImageView(file);
 
+
         System.out.println(initImageList.get(0).getAbsoluteFile());
     }
 
@@ -107,9 +107,11 @@ public class Main extends Application {
         System.out.println("count: " + imageFiles.size());
         imageStatList.removeAll(imageStatList);
 
-        for(File image : imageFiles) {
-            ImageStatBuilder builder = new ImageStatBuilder(image);
-            imageStatList.add(builder.getImageStat(initImageFile));
+        for(File compressedImage : imageFiles) {
+//            ImageStatBuilder builder = new ImageStatBuilder(image);
+//            imageStatList.add(builder.getImageStat(initImageFile));
+            imageStatList.add(new ImageStat(initImageFile.getAbsolutePath(),
+                    compressedImage.getAbsolutePath()));
         }
     }
 

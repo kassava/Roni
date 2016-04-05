@@ -28,13 +28,18 @@ public class ImageStatBuilder {
     }
 
     private void computeStat() {
-        String fileExtension = getFileExtension(compressedImageFile);
+        String fileExtensions = getFileExtension(compressedImageFile) +
+                getFileExtension(initImageFile);
 
-        switch (fileExtension) {
-            case "jpg":
+        switch (fileExtensions) {
+            case "jpgjpg":
                 computeJpgImageStat();
                 break;
-            case "raw":
+            case "jpgraw":
+                break;
+            case "rawjpg":
+                break;
+            case "rawraw":
                 computeRawImageStat();
                 break;
             default:
@@ -62,9 +67,11 @@ public class ImageStatBuilder {
     private void computeJpgImageStat() {
         Image image = new Image("file:" + compressedImageFile.getAbsolutePath());
 
-        System.out.println(imageStat.getFilePath());
+        System.out.println(imageStat.getCompressedImageFilePath());
 
         PixelReader pixelReader = image.getPixelReader();
+        imageStat = new ImageStat(initImageFile.getAbsolutePath(),
+                compressedImageFile.getAbsolutePath());
 
         int imageWidth = (int) image.getWidth();
         int imageHeight = (int) image.getHeight();
@@ -74,7 +81,5 @@ public class ImageStatBuilder {
                 byteArray[x][y] = (int) (pixelReader.getColor(x, y).getBlue() * 255);
             }
         }
-
-        imageStat = new ImageStat(compressedImageFile.getAbsolutePath(), compressedImageFile.getName(), 0, 0);
     }
 }

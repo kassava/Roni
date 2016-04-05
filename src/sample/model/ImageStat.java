@@ -1,7 +1,5 @@
 package sample.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -12,73 +10,56 @@ import javafx.beans.property.StringProperty;
  */
 public class ImageStat {
 
-    private final StringProperty filePath;
-    private final StringProperty fileName;
+    private final StringProperty compressedImageFilePath;
+    private final StringProperty initImageFilePath;
     private StringProperty fileExtension;
-    private final IntegerProperty decisiveOnSubtractionStat;
-    private final IntegerProperty decisiveOnDivisionStat;
+    private StringProperty decisiveOnSubtractionStat = new SimpleStringProperty("no stat");
+    private StringProperty decisiveOnDivisionStat = new SimpleStringProperty("no stat");
 
     public ImageStat() {
-        this(null, null, null, null);
+        this(null, null);
     }
 
-    public ImageStat(String filePath, String fileName, Integer decisiveOnSubtractionStat, Integer decisiveOnDivisionStat) {
-        this.filePath = new SimpleStringProperty(filePath);
-        this.fileName = new SimpleStringProperty(fileName);
-        this.decisiveOnSubtractionStat = new SimpleIntegerProperty(decisiveOnSubtractionStat);
-        this.decisiveOnDivisionStat = new SimpleIntegerProperty(decisiveOnDivisionStat);
+    public ImageStat(String initImageFilePath, String compressedImageFilePath) {
+        this.initImageFilePath = new SimpleStringProperty(initImageFilePath);
+        this.compressedImageFilePath = new SimpleStringProperty(compressedImageFilePath);
     }
 
-
-    public String getFilePath() {
-        return filePath.get();
+    public String getCompressedImageFilePath() {
+        return compressedImageFilePath.get();
     }
 
-    public StringProperty filePathProperty() {
-        return filePath;
+    public StringProperty compressedImageFilePathProperty() {
+        return compressedImageFilePath;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath.set(filePath);
+    public void setCompressedImageFilePath(String filePath) {
+        this.compressedImageFilePath.set(filePath);
     }
 
-    public int getDecisiveOnSubtractionStat() {
+    public String getDecisiveOnSubtractionStat() {
         return decisiveOnSubtractionStat.get();
     }
 
-    public IntegerProperty decisiveOnSubtractionStatProperty() {
+    public StringProperty decisiveOnSubtractionStatProperty() {
         return decisiveOnSubtractionStat;
     }
 
-    public void setDecisiveOnSubtractionStat(int decisiveOnSubtractionStat) {
+    public void setDecisiveOnSubtractionStat(String decisiveOnSubtractionStat) {
         this.decisiveOnSubtractionStat.set(decisiveOnSubtractionStat);
     }
 
-
-    public int getDecisiveOnDivisionStat() {
+    public String getDecisiveOnDivisionStat() {
         return decisiveOnDivisionStat.get();
     }
 
-    public IntegerProperty decisiveOnDivisionStatProperty() {
+    public StringProperty decisiveOnDivisionStatProperty() {
         return decisiveOnDivisionStat;
     }
 
-    public void setDecisiveOnDivisionStat(int decisiveOnDivisionStat) {
+    public void setDecisiveOnDivisionStat(String decisiveOnDivisionStat) {
         this.decisiveOnDivisionStat.set(decisiveOnDivisionStat);
     }
-
-    public String getFileName() {
-        return fileName.get();
-    }
-
-    public StringProperty fileNameProperty() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName.set(fileName);
-    }
-
 
     public String getFileExtension() {
         return fileExtension.get();

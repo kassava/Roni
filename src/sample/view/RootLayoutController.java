@@ -1,7 +1,9 @@
 package sample.view;
 
 import javafx.fxml.FXML;
-import javafx.stage.DirectoryChooser;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import sample.Main;
 
@@ -14,6 +16,9 @@ import java.util.List;
  */
 public class RootLayoutController {
 
+    @FXML
+    private MenuItem menuItem;
+
     // Reference to the main application.
     private Main mainApp;
 
@@ -22,7 +27,7 @@ public class RootLayoutController {
     }
 
     /**
-     * Opens a FileChooser to let the user select a folder with images?
+     * Opens a FileChooser to let the user select images.
      */
     @FXML
     private void handleOpen() {
@@ -36,6 +41,9 @@ public class RootLayoutController {
         }
     }
 
+    /**
+     * Open init image (the uncompressed image).
+     */
     @FXML
     private void handleOpenInitImage() {
         FileChooser fileChooser = new FileChooser();
@@ -50,12 +58,20 @@ public class RootLayoutController {
 
         if (file != null) {
             mainApp.loadInitImage(file);
+            menuItem.setDisable(false);
         }
     }
 
     @FXML
     private void handleAbout() {
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Широнин А.С. 46 отдел.");
+        alert.setHeaderText("Детали...");
+        alert.setTitle("Внимание!");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                alert.close();
+            }
+        });
     }
 
     /**

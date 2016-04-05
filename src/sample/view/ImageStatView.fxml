@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ImageStatViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ImageStatViewController">
    <children>
       <SplitPane dividerPositions="0.25" layoutX="200.0" layoutY="120.0" minHeight="400.0" minWidth="500.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>

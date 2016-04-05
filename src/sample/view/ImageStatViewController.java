@@ -41,11 +41,11 @@ public class ImageStatViewController {
 
     /**
      * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * after...?
      */
     @FXML
     private void initialize() {
-        fileNameColumn.setCellValueFactory(cellData->cellData.getValue().fileNameProperty());
+        fileNameColumn.setCellValueFactory(cellData->cellData.getValue().compressedImageFilePathProperty());
 
         // Clear person details.
         showImageStatDetails(null);
@@ -66,7 +66,7 @@ public class ImageStatViewController {
             // Fill the labels with info from imageStat object.
             subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
             divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());
-            Image image = new Image("file:" + imageStat.getFilePath());
+            Image image = new Image("file:" + imageStat.getCompressedImageFilePath());
             compressedImageView.setImage(image);
         } else {
             subtractionLabel.setText("");
