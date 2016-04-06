@@ -111,8 +111,6 @@ public class Main extends Application {
         imageStatList.removeAll(imageStatList);
 
         for(File compressedImage : imageFiles) {
-//            ImageStatBuilder builder = new ImageStatBuilder(image);
-//            imageStatList.add(builder.getImageStat(initImageFile));
             imageStatList.add(new ImageStat(initImageFile.getAbsolutePath(),
                     compressedImage.getAbsolutePath()));
         }

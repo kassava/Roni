@@ -39,6 +39,7 @@ public class ImageStatBuilder {
                 compressedImageBytes = getJpgBytes(imageStat.getCompressedImageFilePath());
                 break;
             case "raw":
+                compressedImageBytes = getRawBytes(imageStat.getCompressedImageFilePath());
                 break;
         }
 
@@ -54,12 +55,14 @@ public class ImageStatBuilder {
         int imageHeight = (int) image.getHeight();
         int[][] imageBytes = new int[imageHeight][imageWidth];
         PixelReader pixelReader = image.getPixelReader();
+        System.out.println(pixelReader.getColor(127, 95) + " - " + pixelReader.getColor(128, 95) +
+            " - " + pixelReader.getColor(126, 95));
         for (int y = 0; y < imageHeight; y++) {
             for (int x = 0; x < imageWidth; x++) {
-                imageBytes[x][y] = (int) (pixelReader.getColor(x, y).getBlue() * 255);
-                System.out.print(imageBytes[x][y] + " ");
+                imageBytes[x][y] = (int) (pixelReader.getColor(y, x).getBlue() * 255);
+//                System.out.print(imageBytes[x][y] + "\t");
             }
-            System.out.println();
+//            System.out.println();
         }
         return imageBytes;
     }
@@ -83,15 +86,15 @@ public class ImageStatBuilder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(imageFileSize);
         int i = 0;
-        for (int x = 0; x < Math.sqrt(imageFileSize); x++) {
-            for (int y = 0; y < Math.sqrt(imageFileSize); y++) {
+        for (int x = 0; x < (int) Math.sqrt(imageFileSize); x++) {
+            for (int y = 0; y < (int) Math.sqrt(imageFileSize); y++) {
                 imageBytes[x][y] =  0xFF & (int) mirerBytes[i++];
-                System.out.print(imageBytes[x][y] + "\t");
+//                System.out.print(imageBytes[x][y] + "\t");
             }
-            System.out.println();
+//            System.out.println();
         }
+
         return imageBytes;
     }
 

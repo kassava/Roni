@@ -67,6 +67,8 @@ public class ImageStatViewController {
 
             ImageStatBuilder builder = new ImageStatBuilder(imageStat);
 
+            System.out.println("compr: " + imageStat.getCompressedImageFilePath());
+
             // Fill the labels with info from imageStat object.
             subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
             divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());

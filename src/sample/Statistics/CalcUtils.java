@@ -64,6 +64,7 @@ public class CalcUtils {
         if (x > 3840 || y > 3840) {
             return;
         }
+//        System.out.println("[" + x + "][" + y + "]=" + byteArray[x][y]);
         sts.addValue(byteArray[x][y]);
     }
 }
