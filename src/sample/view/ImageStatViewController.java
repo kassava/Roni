@@ -2,6 +2,7 @@ package sample.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
@@ -20,13 +21,13 @@ public class ImageStatViewController {
     private TableColumn<ImageStat, String> fileNameColumn;
 
     @FXML
-    private Label subtractionLabel;
-    @FXML
-    private Label divisionLabel;
-    @FXML
     private ImageView compressedImageView;
     @FXML
     private ImageView initImageView;
+    @FXML
+    private ListView<Double> subtractionListView;
+    @FXML
+    private ListView<Double> divisionListView;
 
     /**
      * Reference to the main application.
@@ -67,16 +68,14 @@ public class ImageStatViewController {
 
             ImageStatBuilder builder = new ImageStatBuilder(imageStat);
 
-            System.out.println("compr: " + imageStat.getCompressedImageFilePath());
-
             // Fill the labels with info from imageStat object.
-            subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
-            divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());
+//            subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
+//            divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());
             Image image = new Image("file:" + imageStat.getCompressedImageFilePath());
             compressedImageView.setImage(image);
         } else {
-            subtractionLabel.setText("");
-            divisionLabel.setText("");
+//            subtractionLabel.setText("");
+//            divisionLabel.setText("");
             Image image = new Image("file:Eye_light.png");
             compressedImageView.setImage(image);
             image = new Image("file:chfdbnj6.png");
@@ -100,8 +99,10 @@ public class ImageStatViewController {
 
         // Add observable list to the table.
         imageStatTable.setItems(mainApp.getImageStatList());
+//        subtractionListView.setItems(mainApp.getSubtractionList());
+//        divisionListView.setItems(mainApp.getDivisionList());
 
-        System.out.println(mainApp.getInitImageList().size());
+//        System.out.println(mainApp.getInitImageList().size());
         if (mainApp.getInitImageList().size() != 0) {
             initImageView.setImage(new Image("file:" + mainApp.getInitImageList().get(0).getAbsolutePath()));
             System.out.println(mainApp.getInitImageList().get(0).getAbsoluteFile());

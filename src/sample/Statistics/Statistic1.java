@@ -11,19 +11,6 @@ public class Statistic1 {
 
         int ringWidth = 1;
         int r = 1;
-
-        for (int i = 0; i < 5; i ++) {
-//			calculateRing(byteArray, stats, 127, 95, r, r + ringWidth - 1, 0);
-            r += (ringWidth);
-            CalcUtils.calculateRing(byteArray, stats, 127, 95, r, r + ringWidth - 1, 1);
-            r += (ringWidth);
-        }
-        double backgroundMean1 = stats.getMean();
-        log("backgeroundmean1: " + backgroundMean1);
-
-        stats.clear();
-        ringWidth = 1;
-        r = 1;
         for (int i = 0; i < 5; i++) {
             CalcUtils.calculateRing(byteArray, stats, 127, 95, r, r + ringWidth - 1, 0);
             r += (ringWidth);
@@ -34,6 +21,7 @@ public class Statistic1 {
         double[] SD = new double[6];
         Kcp[0] = stats.getSum() / stats.getN();
         SD[0] = stats.getStandardDeviation();
+        Kcp[0] /= SD[0];
         log("Kcp1 = " + Kcp[0] + "; СКО1 = " + SD[0]);
 
         stats.clear();
@@ -47,6 +35,7 @@ public class Statistic1 {
         }
         Kcp[1] = stats.getSum() / stats.getN();
         SD[1] = stats.getStandardDeviation();
+        Kcp[1] /= SD[1];
         log("Kcp2 = " + Kcp[1] + "; СКО2 = " + SD[1]);
 
 
@@ -61,6 +50,7 @@ public class Statistic1 {
         }
         Kcp[2] = stats.getSum() / stats.getN();
         SD[2] = stats.getStandardDeviation();
+        Kcp[2] /= SD[2];
         log("Kcp3 = " + Kcp[2] + "; СКО3 = " + SD[2]);
 
         stats.clear();
@@ -74,6 +64,7 @@ public class Statistic1 {
         }
         Kcp[3] = stats.getSum() / stats.getN();
         SD[3] = stats.getStandardDeviation();
+        Kcp[3] /= SD[3];
         log("Kcp4 = " + Kcp[3] + "; СКО4 = " + SD[3]);
 
         stats.clear();
@@ -87,19 +78,8 @@ public class Statistic1 {
         }
         Kcp[4] = stats.getSum() / stats.getN();
         SD[4] = stats.getStandardDeviation();
+        Kcp[4] /= SD[4];
         log("Kcp5 = " + Kcp[4] + "; СКО5 = " + SD[4]);
-
-        stats.clear();
-        ringWidth = 6;
-        r = 6;
-        for (int i = 0; i < 3; i ++) {
-//			calculateRing(byteArray, stats, 210, 210, r, r + ringWidth - 1, 0);
-            r += (ringWidth);
-            CalcUtils.calculateRing(byteArray, stats, 210, 210, r, r + ringWidth - 1, 1);
-            r += (ringWidth);
-        }
-        double backgroundMean6 = stats.getMean();
-        log("backgeroundmean6: " + backgroundMean6);
 
         stats.clear();
         ringWidth = 6;
@@ -112,6 +92,7 @@ public class Statistic1 {
         }
         Kcp[5] = stats.getSum() / stats.getN();
         SD[5] = stats.getStandardDeviation();
+        Kcp[5] /= SD[5];
         log("Kcp6 = " + Kcp[5] + "; СКО6 = " + SD[5]);
 
         return Kcp;

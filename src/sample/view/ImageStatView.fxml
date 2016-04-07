@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -26,17 +26,17 @@
             </AnchorPane>
           <AnchorPane minHeight="100.0" minWidth="300.0" prefHeight="268.0" prefWidth="225.0" styleClass="background">
                <children>
-                  <ImageView fx:id="compressedImageView" fitHeight="160.0" fitWidth="150.0" layoutX="146.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="compressedImageView" fitHeight="160.0" fitWidth="150.0" layoutX="282.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Eye_light.png" />
                      </image></ImageView>
-                  <Label fx:id="subtractionLabel" alignment="CENTER" layoutX="71.0" layoutY="317.0" prefHeight="60.0" prefWidth="150.0" styleClass="label-bright" text="Статистика1" textAlignment="CENTER" />
-                  <Label fx:id="divisionLabel" alignment="CENTER" layoutX="245.0" layoutY="317.0" prefHeight="60.0" prefWidth="150.0" styleClass="label-bright" text="Статистика2" textAlignment="CENTER" />
-                  <ImageView fx:id="initImageView" fitHeight="160.0" fitWidth="150.0" layoutX="146.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="initImageView" fitHeight="160.0" fitWidth="150.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../chfdbnj6.png" />
                      </image>
                   </ImageView>
+                  <ListView layoutX="14.0" layoutY="185.0" prefHeight="200.0" prefWidth="200.0" styleClass="background" />
+                  <ListView layoutX="232.0" layoutY="185.0" prefHeight="200.0" prefWidth="200.0" styleClass="background" />
                </children>
             </AnchorPane>
         </items>

@@ -21,6 +21,8 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<ImageStat> imageStatList = FXCollections.observableArrayList();
+    private ObservableList<Double> subtractionList = FXCollections.observableArrayList();
+    private ObservableList<Double> divisionList = FXCollections.observableArrayList();
     private ImageStatViewController controller;
     private FXMLLoader loader;
     private File initImageFile;
@@ -43,6 +45,14 @@ public class Main extends Application {
      */
     public ObservableList<ImageStat> getImageStatList() {
         return imageStatList;
+    }
+
+    public ObservableList<Double> getSubtractionList() {
+        return subtractionList;
+    }
+
+    public ObservableList<Double> getDivisionList() {
+        return divisionList;
     }
 
     public ObservableList<File> getInitImageList() {
@@ -103,7 +113,7 @@ public class Main extends Application {
             imageStat.setInitImageFilePath(initImageFile.getAbsolutePath());
         }
 
-        System.out.println(initImageList.get(0).getAbsoluteFile());
+//        System.out.println(initImageList.get(0).getAbsoluteFile());
     }
 
     public void loadImages(List<File> imageFiles) {
@@ -114,6 +124,10 @@ public class Main extends Application {
             imageStatList.add(new ImageStat(initImageFile.getAbsolutePath(),
                     compressedImage.getAbsolutePath()));
         }
+    }
+
+    public void fillListViews() {
+
     }
 
     public static void main(String[] args) {
