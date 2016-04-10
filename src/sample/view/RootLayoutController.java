@@ -8,6 +8,8 @@ import javafx.stage.FileChooser;
 import sample.Main;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +50,19 @@ public class RootLayoutController {
     private void handleOpenInitImage() {
         FileChooser fileChooser = new FileChooser();
 
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "JPG files (*.jpg)", "*.*");
-        fileChooser.getExtensionFilters().add(extFilter);
+        // Set extension filters
+        FileChooser.ExtensionFilter allImagesFilter = new FileChooser.ExtensionFilter(
+                "Images", new String[] {"*.jpg*", "*.png", "*.bmp", "*.raw"});
+        FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter(
+                "JPG", "*.jpg*");
+        FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter(
+                "PNG", "*.png*");
+        FileChooser.ExtensionFilter bmpFilter = new FileChooser.ExtensionFilter(
+                "BMP", "*.bmp*");
+        FileChooser.ExtensionFilter rawFilter = new FileChooser.ExtensionFilter(
+                "RAW", "*.raw*");
+
+        fileChooser.getExtensionFilters().addAll(allImagesFilter, jpgFilter, pngFilter, bmpFilter, rawFilter);
 
         // Show save file dialog
         File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());

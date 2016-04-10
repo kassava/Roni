@@ -47,7 +47,7 @@ public class ImageStatViewController {
      */
     @FXML
     private void initialize() {
-        fileNameColumn.setCellValueFactory(cellData->cellData.getValue().compressedImageFilePathProperty());
+        fileNameColumn.setCellValueFactory(cellData->cellData.getValue().compressedFileNameProperty());
 
         // Clear person details.
         showImageStatDetails(null);
@@ -67,12 +67,15 @@ public class ImageStatViewController {
         if (imageStat != null) {
 
             ImageStatBuilder builder = new ImageStatBuilder(imageStat);
+            mainApp.fillListViews(builder.getSubLk(), builder.getDivLk());
 
             // Fill the labels with info from imageStat object.
 //            subtractionLabel.setText("-: " + imageStat.getDecisiveOnSubtractionStat());
 //            divisionLabel.setText("\\: " + imageStat.getDecisiveOnDivisionStat());
             Image image = new Image("file:" + imageStat.getCompressedImageFilePath());
             compressedImageView.setImage(image);
+            image = new Image("file:" + imageStat.getInitImageFilePath());
+            initImageView.setImage(image);
         } else {
 //            subtractionLabel.setText("");
 //            divisionLabel.setText("");
@@ -99,8 +102,8 @@ public class ImageStatViewController {
 
         // Add observable list to the table.
         imageStatTable.setItems(mainApp.getImageStatList());
-//        subtractionListView.setItems(mainApp.getSubtractionList());
-//        divisionListView.setItems(mainApp.getDivisionList());
+        subtractionListView.setItems(mainApp.getSubtractionList());
+        divisionListView.setItems(mainApp.getDivisionList());
 
 //        System.out.println(mainApp.getInitImageList().size());
         if (mainApp.getInitImageList().size() != 0) {

@@ -126,8 +126,16 @@ public class Main extends Application {
         }
     }
 
-    public void fillListViews() {
+    public void fillListViews(double[] subArray, double[] divArray) {
+        divisionList.removeAll(divisionList);
+        subtractionList.removeAll(subtractionList);
 
+        for (int i = 0; i < divArray.length; i++) {
+            divisionList.add(divArray[i]);
+        }
+        for (int i = 0; i < subArray.length; i++) {
+            subtractionList.add(subArray[i]);
+        }
     }
 
     public static void main(String[] args) {

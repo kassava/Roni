@@ -11,9 +11,11 @@ import java.io.*;
  */
 public class ImageStatBuilder {
 
-    ImageStat imageStat;
-    int[][] initImageBytes;
-    int[][] compressedImageBytes;
+    private ImageStat imageStat;
+    private int[][] initImageBytes;
+    private int[][] compressedImageBytes;
+    private double[] divLk;
+    private double[] subLk;
 
 
     public ImageStatBuilder(ImageStat imageStat) {
@@ -22,11 +24,22 @@ public class ImageStatBuilder {
         computeStat();
     }
 
+    public double[] getSubLk() {
+        return subLk;
+    }
+
+    public double[] getDivLk() {
+        return divLk;
+    }
+
     private void computeStat() {
         String initFileExtension = getFileExtension(imageStat.getInitImageFilePath());
         switch (initFileExtension) {
             case "jpg":
-                initImageBytes = getJpgBytes(imageStat.getInitImageFilePath());
+                initImageBytes = getImageBytes(imageStat.getInitImageFilePath());
+                break;
+            case "png":
+                initImageBytes = getImageBytes(imageStat.getInitImageFilePath());
                 break;
             case "raw":
                 initImageBytes = getRawBytes(imageStat.getInitImageFilePath());
@@ -36,7 +49,10 @@ public class ImageStatBuilder {
         String compressedFileExtension = getFileExtension(imageStat.getCompressedImageFilePath());
         switch (compressedFileExtension) {
             case "jpg":
-                compressedImageBytes = getJpgBytes(imageStat.getCompressedImageFilePath());
+                compressedImageBytes = getImageBytes(imageStat.getCompressedImageFilePath());
+                break;
+            case "png":
+                compressedImageBytes = getImageBytes(imageStat.getCompressedImageFilePath());
                 break;
             case "raw":
                 compressedImageBytes = getRawBytes(imageStat.getCompressedImageFilePath());
@@ -47,9 +63,9 @@ public class ImageStatBuilder {
     }
 
     /**
-     * Gets bytes from jpg image.
+     * Gets bytes from image. Supported image formats are BMP, GIF, JPEG, PNG.
      */
-    private int[][] getJpgBytes(String imageFilePath) {
+    private int[][] getImageBytes(String imageFilePath) {
         Image image = new Image("file:" + imageFilePath);
         int imageWidth = (int) image.getWidth();
         int imageHeight = (int) image.getHeight();
@@ -70,7 +86,7 @@ public class ImageStatBuilder {
     private int[][] getRawBytes(String imageFilePath) {
         File imageFile = new File(imageFilePath);
         int imageFileSize = (int) imageFile.length();
-//        imageFileSize /= 3;
+        imageFileSize /= 3;
         int[][] imageBytes = new int[(int) Math.sqrt(imageFileSize)][(int) Math.sqrt(imageFileSize)];
         byte[] mirerBytes = new byte[imageFileSize];
         try {
@@ -95,16 +111,47 @@ public class ImageStatBuilder {
     private void makeCalculating() {
         double[] initLk = Statistic1.stat1(initImageBytes);
         double[] compressedLk = Statistic1.stat1(compressedImageBytes);
-        double[] subLk = new double[initLk.length];
+        subLk = new double[initLk.length];
         for (int idx = 0; idx < initLk.length; idx++) {
             subLk[idx] = initLk[idx] - compressedLk[idx];
             System.out.println(subLk[idx]);
         }
         System.out.println("---");
-        double[] divLk = new double[initLk.length];
+        divLk = new double[initLk.length];
         for (int idx = 0; idx < initLk.length; idx++) {
             divLk[idx] = initLk[idx] / compressedLk[idx];
             System.out.println(divLk[idx]);
+        }
+        saveStatsToFile();
+    }
+
+    private void saveStatsToFile() {
+        File outFile = new File("stats.txt");
+
+        try {
+            FileWriter fileWriter = new FileWriter(outFile, true);
+            fileWriter.append(imageStat.getInitFileName() + " --- " + imageStat.getCompressedFileName() + "\n");
+            fileWriter.append("деление:\n");
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("\t");
+            for (int i = 0; i < subLk.length; i++) {
+                stringBuilder.append(String.valueOf(subLk[i]));
+                stringBuilder.append(" ");
+            }
+            fileWriter.append(stringBuilder.toString()  + "\n");
+            stringBuilder = new StringBuilder();
+            fileWriter.append("вычитание:\n");
+            stringBuilder.append("\t");
+            for (int i = 0; i < divLk.length; i++) {
+                stringBuilder.append(String.valueOf(divLk[i]));
+                stringBuilder.append(" ");
+            }
+            fileWriter.append(stringBuilder.toString() + "\n");
+            fileWriter.append("\n\n");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
